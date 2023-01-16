@@ -11,34 +11,38 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state ={
-      temp: ""
+      temp: []
     }
     
   }
 
-  render(){
-    
-    var sendPOST = async() => {
-      await fetch(`${ENDPOINT}/healthcheck`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify("hello")
+  componentDidUpdate(prevProps, prevState){
+    if (prevState.temp !== this.state.temp){
+      console.log("state changed");
+    }
+  }
+  componentDidMount(){
+    (async() => {
+      await fetch(`${ENDPOINT}/api`, {
+        method: "GET"
+        // body: JSON.stringify("hello")
       }).then((r) => r.json())
       .then((data) => {
         // jsonData = JSON.stringify(data)
-      this.setState ({ temp: JSON.stringify(data)})
+        console.log(data);
+      this.setState ({ temp: data})
       console.log(this.state.temp);
       }); 
-    }
+    })();
+  }
 
+  render(){
     return (
       <div className="App">
         <Header />
         <Main data={this.state.temp}/>
-        <button type='submit' onClick={sendPOST}> Send</button>
-        
+        {/* <button type='submit' onClick={sendPOST}> Send</button>
+         */}
       </div>
     );
   }

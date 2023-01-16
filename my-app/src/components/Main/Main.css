@@ -12,7 +12,23 @@ h2{
     font-size: 4em;
     text-align: center;
 }
-.json{
+.json-artists{
     background-color: aliceblue;
     min-height: 59vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    align-items: baseline;
+    gap: 2rem;
+}
+.artist-container{
+    border: 1px solid rgb(166, 206, 241);
+    background-color: rgb(101, 164, 219);
+}
+
+.artist-container img:hover{
+    
+    border: 1px solid red;
 }
