@@ -38,6 +38,7 @@ func exists(path string) (bool, error) {
 }
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Homepage fetch")
 	if r.URL.Path != "/api" {
 		http.Error(w, "404 Page not found", http.StatusNotFound)
 		return
@@ -64,7 +65,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			return
 		}
-		os.WriteFile(tempFile.Name(), tempInfo, 666)
+		os.WriteFile(tempFile.Name(), tempInfo, 0666)
 	}
 
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
@@ -81,9 +82,9 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ArtistHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Artist request")
+	log.Println("Artist request") //LOG
 	artistStringId := r.URL.Query().Get("id")
-
+	log.Println("Parsed Query ID = ", artistStringId) //LOG
 	artistId, err := strconv.Atoi(artistStringId)
 	if err != nil {
 		fmt.Println(artistId)
@@ -94,34 +95,11 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(404)
 		return
 	}
-	parseLocations(artistStringId, artistId)
-	json.NewEncoder(w).Encode(artistId)
-}
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
 
-// func HealthCheck(w http.ResponseWriter, r *http.Request) {
-// 	fmt.Println("we are in")
-// 	rContent, err := ioutil.ReadAll(r.Body)
-// 	if err != nil {
-// 		log.Println(err)
-// 		return
-// 	}
-// 	json.Unmarshal(rContent, result)
-// 	fmt.Println(result)
-// 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
-// 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-// 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token")
-// 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-// 	// w.Write([]byte(resp))
-// 	todo := Todo{
-// 		ID:    1,
-// 		Title: "First JSON",
-// 		Done:  true,
-// 		Body:  "You did it!!!!",
-// 	}
-// 	respo, err := json.Marshal(todo)
-// 	if err != nil {
-// 		log.Println("Couldn't marshal JSON")
-// 		return
-// 	}
-// 	w.Write(respo)
-// }
+	parseLocations(artistStringId, artistId)
+	json.NewEncoder(w).Encode(Artists[artistId-1])
+}

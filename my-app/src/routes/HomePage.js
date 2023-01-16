@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import {ENDPOINT} from '../App'
+import {ENDPOINT} from '..'
 import React from 'react';
 import Header from '../components/Header/Header'
 import Main from '../components/Main/Main';
