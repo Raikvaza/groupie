@@ -1,5 +1,6 @@
 import React from 'react';
 import './Main.css';
+import { Link } from "react-router-dom";
 import { Component } from 'react';
 import {ENDPOINT} from '../../App'
 // const Main = () =>(
@@ -36,8 +37,9 @@ class Main extends Component{
             <div className='json-artists'>
                 {this.state.data.map(user => (
                     <div key={user.id} className="artist-container">
-                        <a href={`${ENDPOINT}/api/artist?id=${user.id}`}> <img src={user.image} alt="asd"/></a>
-
+                        {/* {`${ENDPOINT}/api/artist?id=${user.id}`} */}
+                        {/* <a href={`artist?id=${user.id}`}> <img src={user.image} alt="asd"/></a> */}
+                        <Link to="/artist"><img src={user.image} alt="asd"/></Link>
                         <h4> {user.name}</h4>
                         <p> Creation Date: {user.creationDate}</p>
                         <p> First Album: {user.firstalbum}</p>

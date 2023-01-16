@@ -1,54 +1,51 @@
-import './App.css';
-import Header from './components/Header';
-import Main from './components/Main';
+// import './App.css';
+// import Header from './components/Header';
+// import Main from './components/Main';
+// import React, { Component } from 'react';
+// export const ENDPOINT = "http://localhost:4000";
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from './pages/HomePage';
+import Artist from './pages/ArtistPage';
+import './App.css';
+
+
 export const ENDPOINT = "http://localhost:4000";
 
-
-
-
-class App extends Component {
-  constructor(props){
-    super(props);
-    this.state ={
-      temp: []
-    }
-    
-  }
-
-  componentDidUpdate(prevProps, prevState){
-    if (prevState.temp !== this.state.temp){
-      console.log("state changed");
-    }
-  }
-  componentDidMount(){
-    (async() => {
-      await fetch(`${ENDPOINT}/api`, {
-        method: "GET"
-        // body: JSON.stringify("hello")
-      }).then((r) => r.json())
-      .then((data) => {
-        // jsonData = JSON.stringify(data)
-        console.log(data);
-      this.setState ({ temp: data})
-      console.log(this.state.temp);
-      }); 
-    })();
-  }
-
+class App extends Component{
   render(){
     return (
-      <div className="App">
-        <Header />
-        <Main data={this.state.temp}/>
-        {/* <button type='submit' onClick={sendPOST}> Send</button>
-         */}
-      </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />}> 
+            {/* <Route index element={<Home />} /> */}
+          <Route path="artist" element={<Artist />} />
+            {/* <Route path="*" element={<Home />} /> */}
+          </Route>
+        </Routes>
+      </Router>
     );
   }
 }
 
+
 export default App;
+
+// export default function App() {
+//   return (
+//     <BrowserRouter>
+//       <Routes>
+//         <Route path="/" element={<Layout />}>
+//           <Route index element={<Home />} />
+//           <Route path="blogs" element={<Blogs />} />
+//           <Route path="contact" element={<Contact />} />
+//           <Route path="*" element={<NoPage />} />
+//         </Route>
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// }
+
 /*
 button is pressed
 sendPOST function updates updates the state of App
