@@ -1,6 +1,6 @@
 
 import * as React from "react";
-import * as ReactDOM from "react-dom";
+import * as ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route, useLoaderData } from "react-router-dom";
 import Home from './routes/HomePage';
 import Artist from './routes/ArtistPage';

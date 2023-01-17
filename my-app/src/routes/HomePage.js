@@ -25,9 +25,9 @@ class Home extends Component {
         }).then((r) => r.json())
         .then((data) => {
           // jsonData = JSON.stringify(data)
-          console.log(data);
+          
         this.setState ({ temp: data})
-        console.log(this.state.temp);
+        
         }); 
       })();
     }

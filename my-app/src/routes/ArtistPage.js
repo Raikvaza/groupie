@@ -8,41 +8,79 @@ import { useState, useEffect } from "react";
 //     const name = new URLSearchParams(search).get('id');
 // console.log(name);
 
-const Artist = () => {
-    // console.log(searchParams.get('id'))
-// var artistData    
-var [dates, setDates] = useState();
+function Artist () {
+const [artistInfo, setArtist] = useState("");
+const [dates, setDates] = useState("");
+const [country, setCountry] = useState("");
 const [fetched, setFetch] = useState(false);
-
-
 const [searchParams] = useSearchParams();
 
-(async() => {
-    await fetch(`${ENDPOINT}/api/artist?id=${searchParams.get('id')}`, {
-      method: "GET"
-    }).then((r) => r.json())
-    .then((data) => {
-     setDates(data)
-     console.log(dates);
-     setFetch(true)
-    }); 
-  })();
-    
-// useEffect(() => {
-// //console.log(`Our data is ${data.DatesLocations}`);
+useEffect(() => {
+  for (const key in artistInfo.DatesLocations){
+    console.log(`${key}: ${artistInfo.DatesLocations[key]}`);
+    }
 
-// })    
+  if(fetched) {
+    Object.entries(artistInfo.DatesLocations).map((value)=>{
+      
+      value.map((val, ind) => {
+        //console.log("\n index: ",ind,"\n value:", val);
+        if(ind == 0){
+          setCountry(val)
+        }
+        
+      })
+  })
+  }
     
+    
+    // <div key={key}>
+    //     {key.map((value, index) => {
+          
+    //       console.log("value is : ", value);
+    //       console.log("index is : ", index);
+    //       console.log("value[index] is : ", value[index]);
+    //     })}
+    // </div>
+  
+
+
+
+
+//    console.log(artistInfo.DatesLocations);
+          if (!fetched){(async() => {
+              await fetch(`${ENDPOINT}/api/artist?id=${searchParams.get('id')}`, {
+                method: "GET"
+              }).then((r) => r.json())
+              .then((data) => {
+              setArtist(data)
+              setFetch(true)
+              console.log(data);
+              }); 
+            })();
+          }
+}, [searchParams.get('id')]);
+
+
+
+
         return(
             <div className="asd"> 
             <Header />
-               
-               
-            {dates.map(user => (
-                <div key={user.id}> 
-               <p>{fetched} </p>
+            <img src={artistInfo.image} alt="image"></img>
+            
+           
+                <div className="locations">
+                  {
+                    console.log(country)
+                  }
+                </div> 
+           
+            {/* {Object.entries(artistInfo).map(([key,value]) => (
+                <div key={key}> 
+               <p>{value} </p>
                </div>   
-            ))}
+            ))} */}
             </div>
 
         );
@@ -96,4 +134,27 @@ const [searchParams] = useSearchParams();
 export default Artist;
 
 
+
+ // {fetched && Object.entries(artistInfo.DatesLocations).map((value)=>{
+  //     return (
+  //       value.map((val, ind) => {
+  //         //console.log("\n index: ",ind,"\n value:", val);
+  //         return(
+  //           ind===0 ? <p>{val}</p>:""
+  //         )
+          
+  //       })
+  //     )
+      
+      
+  //     // <div key={key}>
+  //     //     {key.map((value, index) => {
+            
+  //     //       console.log("value is : ", value);
+  //     //       console.log("index is : ", index);
+  //     //       console.log("value[index] is : ", value[index]);
+  //     //     })}
+  //     // </div>
+  //   })
+  // }
 

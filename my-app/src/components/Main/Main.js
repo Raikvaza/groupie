@@ -15,8 +15,8 @@ class Main extends Component{
         if (prevProps.data !== this.props.data) {
       
             this.setState({data: this.props.data})
-            console.log(typeof(this.state.data));
-            console.log(this.state.data);
+            //console.log(typeof(this.state.data));
+            //console.log(this.state.data);
         }
       
       }        
