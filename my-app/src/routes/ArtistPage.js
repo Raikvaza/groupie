@@ -21,46 +21,21 @@ var cities = []
 useEffect(() => {
   
   if (fetched){
-    // for (const key in artistInfo.DatesLocations){
-    //   console.log(`${key}: ${artistInfo.DatesLocations[key]}`);
-    // }
-  //   Object.keys(artistInfo.DatesLocations).forEach(v =>{
-      
-  //     // if (typeof(v)!= 'undefined'){
-  //     //   cities.push(v)
-  //     // }
-    
-  //  });
-  for (const key of Object.keys(artistInfo.DatesLocations)){  
-    //console.log(artistInfo.DatesLocations[key]);  
-    //console.log(artistInfo.DatesLocations[key])
-    if (key){
-      fullData[key] = []
-      artistInfo.DatesLocations[key].map((value) => {
-        
-        fullData[key].push(value)
-      })
-      
-    }
-    
-  }  
-  
-  //v.map(value => setData(dates.v.push(value)))
-      
-   //console.log(fullData);
-   //console.log(cities);
-    
-    // Object.values(artistInfo.DatesLocations).map((val) => {
-    //   val.forEach(v => {
-    //     if (typeof(v)!= 'undefined'){
-    //       tempo.push(v)
-    //     }
-        
-    //   })
-    // })
-    
-    console.log(fullData);
+    for (const key of Object.keys(artistInfo.DatesLocations)){  
+      //console.log(artistInfo.DatesLocations[key]);  
+      //console.log(artistInfo.DatesLocations[key])
+      if (key){
+        fullData[key] = []
+        artistInfo.DatesLocations[key].map((value) => {
+          
+          fullData[key].push(value)
+        })
+      }
+    }  
   }
+
+
+  console.log(fullData);
   // if(fetched) {
   //   //Object.keys(artistInfo.DatesLocations).map((value, key) =>{
   //   const keys = Object.keys(dates.DatesLocations)  
@@ -90,7 +65,7 @@ useEffect(() => {
 
 
 //    console.log(artistInfo.DatesLocations);
-          if (!fetched){(async() => {
+      if (!fetched){(async() => {
               await fetch(`${ENDPOINT}/api/artist?id=${searchParams.get('id')}`, {
                 method: "GET"
               }).then((r) => r.json())
@@ -100,7 +75,7 @@ useEffect(() => {
               console.log(data);
               }); 
             })();
-          }
+      }
 }, [fetched]);
 
 
@@ -114,7 +89,18 @@ useEffect(() => {
            
                 <div className="locations">
                   {
-                    
+                    Object.entries(fullData).map(([key, value], index) => {
+                      return (<ul key={index}>
+                              <h1>{key}</h1>
+                              {/* {fullData[key].forEach(element => {return(<p> {element}</p>)})}
+                               */}
+                              <li key={fullData[key].index}>{value}</li>
+                              
+                              
+                              
+                              </ul> 
+                      )
+                    })
                   }
                 </div> 
            
