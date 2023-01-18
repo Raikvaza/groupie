@@ -14,24 +14,66 @@ const [dates, setDates] = useState("");
 const [country, setCountry] = useState("");
 const [fetched, setFetch] = useState(false);
 const [searchParams] = useSearchParams();
+const [fullData, setData] = useState({});
 
+var tempo = []
+var cities = []
 useEffect(() => {
-  for (const key in artistInfo.DatesLocations){
-    console.log(`${key}: ${artistInfo.DatesLocations[key]}`);
-    }
-
-  if(fetched) {
-    Object.entries(artistInfo.DatesLocations).map((value)=>{
+  
+  if (fetched){
+    // for (const key in artistInfo.DatesLocations){
+    //   console.log(`${key}: ${artistInfo.DatesLocations[key]}`);
+    // }
+  //   Object.keys(artistInfo.DatesLocations).forEach(v =>{
       
-      value.map((val, ind) => {
-        //console.log("\n index: ",ind,"\n value:", val);
-        if(ind == 0){
-          setCountry(val)
-        }
+  //     // if (typeof(v)!= 'undefined'){
+  //     //   cities.push(v)
+  //     // }
+    
+  //  });
+  for (const key of Object.keys(artistInfo.DatesLocations)){  
+    //console.log(artistInfo.DatesLocations[key]);  
+    //console.log(artistInfo.DatesLocations[key])
+    if (key){
+      fullData[key] = []
+      artistInfo.DatesLocations[key].map((value) => {
         
+        fullData[key].push(value)
       })
-  })
+      
+    }
+    
+  }  
+  
+  //v.map(value => setData(dates.v.push(value)))
+      
+   //console.log(fullData);
+   //console.log(cities);
+    
+    // Object.values(artistInfo.DatesLocations).map((val) => {
+    //   val.forEach(v => {
+    //     if (typeof(v)!= 'undefined'){
+    //       tempo.push(v)
+    //     }
+        
+    //   })
+    // })
+    
+    console.log(fullData);
   }
+  // if(fetched) {
+  //   //Object.keys(artistInfo.DatesLocations).map((value, key) =>{
+  //   const keys = Object.keys(dates.DatesLocations)  
+  //   console.log(keys);
+  //     // value.map((val, ind) => {
+  //     //   //console.log("\n index: ",ind,"\n value:", val);
+  //     //   if(ind == 0){
+  //     //     setCountry(val)
+  //     //   }
+        
+  //     // })
+  
+  // }
     
     
     // <div key={key}>
@@ -59,7 +101,7 @@ useEffect(() => {
               }); 
             })();
           }
-}, [searchParams.get('id')]);
+}, [fetched]);
 
 
 
@@ -72,7 +114,7 @@ useEffect(() => {
            
                 <div className="locations">
                   {
-                    console.log(country)
+                    
                   }
                 </div> 
            
