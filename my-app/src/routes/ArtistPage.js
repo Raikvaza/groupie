@@ -10,14 +10,10 @@ import { useState, useEffect } from "react";
 
 function Artist () {
 const [artistInfo, setArtist] = useState("");
-const [dates, setDates] = useState("");
-const [country, setCountry] = useState("");
 const [fetched, setFetch] = useState(false);
 const [searchParams] = useSearchParams();
 const [fullData, setData] = useState({});
 
-var tempo = []
-var cities = []
 useEffect(() => {
   
   if (fetched){
@@ -35,7 +31,7 @@ useEffect(() => {
   }
 
 
-  console.log(fullData);
+  // console.log(fullData);
   // if(fetched) {
   //   //Object.keys(artistInfo.DatesLocations).map((value, key) =>{
   //   const keys = Object.keys(dates.DatesLocations)  
@@ -83,39 +79,37 @@ useEffect(() => {
 
         return(
             <div className="asd"> 
-            <Header />
-            <img src={artistInfo.image} alt="image"></img>
+              <Header />
+              <img src={artistInfo.image} alt="image"></img>
             
-           
-                <div className="locations">
-                  {
-                    Object.entries(fullData).map(([key, value], index) => {
-                      return (<ul key={index}>
-                              <h1>{key}</h1>
-                              {/* {fullData[key].forEach(element => {return(<p> {element}</p>)})}
-                               */}
-                              <li key={fullData[key].index}>{value}</li>
-                              
-                              
-                              
-                              </ul> 
-                      )
-                    })
-                  }
+              <div className="artist-data">
+                <h3>{fetched? artistInfo.name: <p>Loading data</p>}</h3>
+                <h4>First album: {fetched? artistInfo.firstalbum:<p>Loading data</p>}</h4>
+                  <div className="memebers">
+                    <h3>Members: {fetched? artistInfo.members.map((value => <li>{value}</li>)): <p>Loading data</p>}</h3>
+                  </div>
+              </div>
+                
+
+              <div className="artist-concerts">
+                {
+                  Object.entries(fullData).map(([key, value], index) => {
+                    return (<ul key={key}>
+                            <h4>{key}</h4>
+                            {fullData[key].map(element => <li key={element}>{element}</li>)}
+                          
+                            </ul> 
+                    )
+                  })
+                }
                 </div> 
-           
-            {/* {Object.entries(artistInfo).map(([key,value]) => (
-                <div key={key}> 
-               <p>{value} </p>
-               </div>   
-            ))} */}
             </div>
 
         );
     
 }
 
-
+export default Artist;
 
 
 
@@ -159,7 +153,7 @@ useEffect(() => {
 
 // }
 
-export default Artist;
+
 
 
 
